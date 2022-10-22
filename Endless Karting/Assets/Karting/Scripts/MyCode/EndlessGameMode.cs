@@ -6,13 +6,15 @@ public class EndlessGameMode : MonoBehaviour
 {
     public GameObject road;
 
+    Vector3 trackSpawnLocation = new Vector3(140, 2f, -50);
+    Vector3 trackOffset = new Vector3(0, 0, 0);
+
+    public float roadDestroyTimer = 2.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject dRoad = Instantiate(road, new Vector3(160, -0.2f, -50), Quaternion.identity);
-
-        Destroy(dRoad, 2.0f);
+        InvokeRepeating("InstantiateTrackPiece", 1.0f, 1.0f);
     }
 
     // Update is called once per frame
@@ -21,4 +23,12 @@ public class EndlessGameMode : MonoBehaviour
         
     }
 
+    void InstantiateTrackPiece()
+    {
+        GameObject dRoad = Instantiate(road, trackSpawnLocation + trackOffset, Quaternion.identity);
+
+        Destroy(dRoad, roadDestroyTimer);
+
+        trackOffset = trackOffset + new Vector3(0, 0, 10);
+    }
 }
