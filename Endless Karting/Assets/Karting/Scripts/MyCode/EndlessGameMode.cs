@@ -14,7 +14,7 @@ public class EndlessGameMode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("InstantiateTrackPiece", 1.0f, 1.0f);
+        InvokeRepeating("BuildRoad", 1.0f, 3.0f);
     }
 
     // Update is called once per frame
@@ -23,7 +23,21 @@ public class EndlessGameMode : MonoBehaviour
         
     }
 
-    void InstantiateTrackPiece()
+    private void BuildRoad()
+    {
+        StartCoroutine(StraightTrackPieces());
+    }
+
+    private IEnumerator StraightTrackPieces()
+    {
+        for (int numberofStraightTracks = 0; numberofStraightTracks < 3; numberofStraightTracks++)
+        {
+            InstantiateTrackPiece();
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private void InstantiateTrackPiece()
     {
         GameObject dRoad = Instantiate(road, trackSpawnLocation + trackOffset, Quaternion.identity);
 
