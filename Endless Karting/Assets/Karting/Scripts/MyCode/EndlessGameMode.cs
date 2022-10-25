@@ -11,20 +11,20 @@ public class EndlessGameMode : MonoBehaviour
     Vector3 trackPositionOffset = new Vector3(0, 0, 0);
     Vector3 trackRotationOffset = new Vector3(0, 0, 0);
 
-    public float roadDestroyTimer = 1.0f;
+    public float trackDestroyDelay = 2f;
 
     public string trackDirection = "Front";
+    private int trackIntDirection = 0;
 
 
     void Start()
     {
-        InvokeRepeating("BuildRoad", 1.0f, 2.0f);
+        InvokeRepeating("BuildRoad", 1.0f, 2f);
     }
 
     private void BuildRoad()
     {
-        StartCoroutine(StraightTrackPieces());
-        
+        StartCoroutine(StraightTrackPieces());  
     }
 
     private IEnumerator StraightTrackPieces()
@@ -32,29 +32,29 @@ public class EndlessGameMode : MonoBehaviour
         for (int numberofStraightTracks = 0; numberofStraightTracks < 3; numberofStraightTracks++)
         {
             TrackForward();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.3f);
         }
         TrackTurn();
     }
 
     private void TrackForward()
     {
-        GameObject road = Instantiate(straightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+        GameObject trackForward = Instantiate(straightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
 
-        Destroy(road, roadDestroyTimer);
+        Destroy(trackForward, trackDestroyDelay);
 
-        switch (trackDirection)
+        switch (trackIntDirection)
         {
-            case "Right":
+            case 1:
                 trackPositionOffset = trackPositionOffset + new Vector3(10, 0, 0);
                 break;
-            case "Left":
+            case 3:
                 trackPositionOffset = trackPositionOffset + new Vector3(-10, 0, 0);
                 break;
-            case "Back":
+            case 2:
                 trackPositionOffset = trackPositionOffset + new Vector3(0, 0, -10);
                 break;
-            case "Front":
+            case 0:
                 trackPositionOffset = trackPositionOffset + new Vector3(0, 0, 10);
                 break;
             default:
@@ -65,33 +65,74 @@ public class EndlessGameMode : MonoBehaviour
 
     private void TrackTurn()
     {
-        GameObject road = Instantiate(medTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+        GameObject trackTurn;
 
-        Destroy(road, roadDestroyTimer);
-
-        trackRotationOffset = trackRotationOffset + new Vector3(0, -90, 0);
-
-        switch (trackDirection)
+        switch (Random.Range(0, 2))
         {
-            case "Right":
+            case 0:
+                AddTrackPositionOffset();
+                trackTurn = Instantiate(medTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset + new Vector3(0, -90, 0)));
+                trackRotationOffset = trackRotationOffset + new Vector3(0, 90, 0);
+                trackIntDirection++;
+                NormalizeTrackDirection();
+                break;
+            case 1:
+                trackTurn = Instantiate(medTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                trackRotationOffset = trackRotationOffset + new Vector3(0, -90, 0);
+                trackIntDirection--;
+                NormalizeTrackDirection();
+                AddTrackPositionOffset();
+                break;
+            default:
+                trackTurn = Instantiate(medTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                trackRotationOffset = trackRotationOffset + new Vector3(0, 90, 0);
+                trackIntDirection++;
+                NormalizeTrackDirection();
+                break;
+        }        
+
+        Destroy(trackTurn, trackDestroyDelay);
+        
+    }
+
+    private void AddTrackPositionOffset()
+    {
+        switch (trackIntDirection)
+        {
+            case 0:
                 trackDirection = "Front";
                 trackPositionOffset = trackPositionOffset + new Vector3(10, 0, 10);
                 break;
-            case "Left":
-                trackDirection = "Back";
-                trackPositionOffset = trackPositionOffset + new Vector3(-10, 0, -10);
-                break;
-            case "Back":
+            case 1:
                 trackDirection = "Right";
                 trackPositionOffset = trackPositionOffset + new Vector3(10, 0, -10);
                 break;
-            case "Front":
+            case 2:
+                trackDirection = "Back";
+                trackPositionOffset = trackPositionOffset + new Vector3(-10, 0, -10);
+                break;
+            case 3:
                 trackDirection = "Left";
                 trackPositionOffset = trackPositionOffset + new Vector3(-10, 0, 10);
                 break;
             default:
                 trackDirection = "Left";
                 trackPositionOffset = trackPositionOffset + new Vector3(-10, 0, 10);
+                break;
+        }
+    }
+
+    private void NormalizeTrackDirection()
+    {
+        switch (trackIntDirection)
+        {
+            case 4:
+                trackIntDirection = 0;
+                break;
+            case -1:
+                trackIntDirection = 3;
+                break;
+            default:
                 break;
         }
     }
