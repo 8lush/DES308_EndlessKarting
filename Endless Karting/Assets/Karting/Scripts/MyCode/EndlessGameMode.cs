@@ -7,21 +7,28 @@ public class EndlessGameMode : MonoBehaviour
     public GameObject straightTrack;
     public GameObject medTurnTrack;
     public GameObject specialTrack1;
+    public GameObject specialTrack2;
 
     Vector3 trackSpawnLocation = new Vector3(140, 15f, -50);
     Vector3 trackPositionOffset = new Vector3(0, 0, 0);
     Vector3 trackRotationOffset = new Vector3(0, 0, 0);
 
+    public float trackSpawnDelay = 0.5f;
     public float trackDestroyDelay = 5f;
     public float trackInstantiationFrequency = 2f;
 
-    public string trackDirection = "Front";
+    public int minNumberofTrackForward = 2;
+    public int maxNumberofTrackForward = 5;
+
     private int trackIntDirection = 0;
+
+    private int b;
+    private bool special = false;
 
 
     void Start()
     {
-        InvokeRepeating("BuildRoad", 1.0f, 3.5f);
+        InvokeRepeating("BuildRoad", 1.0f, trackInstantiationFrequency);
     }
 
     private void BuildRoad()
@@ -31,13 +38,22 @@ public class EndlessGameMode : MonoBehaviour
 
     private IEnumerator StraightTrackPieces()
     {
-        for (int numberofStraightTracks = 0; numberofStraightTracks < 3; numberofStraightTracks++)
+        b = Random.Range(minNumberofTrackForward, maxNumberofTrackForward + 1);
+        for (int i = 0; i < b; i++)
         {
             TrackForward();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(trackSpawnDelay);
         }
-        TrackTurn();
-        TrackSpecial();
+        if (special)
+        {
+            TrackSpecial();
+            special = !special;
+        }
+        else 
+        {
+            TrackTurn();
+            special = !special;
+        }      
     }
 
     private void TrackForward()
@@ -85,7 +101,7 @@ public class EndlessGameMode : MonoBehaviour
     {
         GameObject trackSpecial;
 
-        switch (Random.Range(0, 2))
+        switch (Random.Range(0, 4))
         {
             case 0:
                 trackSpecial = Instantiate(specialTrack1, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
@@ -107,9 +123,25 @@ public class EndlessGameMode : MonoBehaviour
                 trackSpecial = Instantiate(specialTrack1, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
                 trackRotationOffset = trackRotationOffset + new Vector3(0, 180, 0);
                 break;
+            case 2:
+                trackSpecial = Instantiate(specialTrack2, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset + new Vector3(0, 180, 0)));
+                trackPositionOffset = trackPositionOffset + new Vector3(0, 4, 0);
+                AddTrackForwardOffset();
+                AddTrackForwardOffset();
+                break;
+            case 3:
+                AddTrackForwardOffset();
+                AddTrackForwardOffset();
+                trackPositionOffset = trackPositionOffset + new Vector3(0, -4, 0);
+                trackSpecial = Instantiate(specialTrack2, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                break;
             default:
                 trackSpecial = Instantiate(specialTrack1, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
-                trackRotationOffset = trackRotationOffset + new Vector3(0, 90, 0);
+                trackRotationOffset = trackRotationOffset + new Vector3(0, 180, 0);
+                AddTrackTurnOffset();
+                trackIntDirection++;
+                NormalizeTrackDirection();
+                AddTrackTurnOffset();
                 trackIntDirection++;
                 NormalizeTrackDirection();
                 break;
@@ -146,24 +178,19 @@ public class EndlessGameMode : MonoBehaviour
         switch (trackIntDirection)
         {
             case 0:
-                trackDirection = "Front";
                 trackPositionOffset = trackPositionOffset + new Vector3(10, 0, 10);
                 break;
             case 1:
-                trackDirection = "Right";
                 trackPositionOffset = trackPositionOffset + new Vector3(10, 0, -10);
                 break;
             case 2:
-                trackDirection = "Back";
                 trackPositionOffset = trackPositionOffset + new Vector3(-10, 0, -10);
                 break;
             case 3:
-                trackDirection = "Left";
                 trackPositionOffset = trackPositionOffset + new Vector3(-10, 0, 10);
                 break;
             default:
-                trackDirection = "Left";
-                trackPositionOffset = trackPositionOffset + new Vector3(-10, 0, 10);
+                trackPositionOffset = trackPositionOffset + new Vector3(10, 0, 10);
                 break;
         }
     }
