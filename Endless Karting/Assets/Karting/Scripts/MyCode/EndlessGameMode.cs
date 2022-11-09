@@ -9,7 +9,7 @@ public class EndlessGameMode : MonoBehaviour
     public GameObject specialTrack1;
     public GameObject specialTrack2;
 
-    Vector3 trackSpawnLocation = new Vector3(140, 15f, -50);
+    public Vector3 trackSpawnLocation = new Vector3(100, 50f, -90);
     Vector3 trackPositionOffset = new Vector3(0, 0, 0);
     Vector3 trackRotationOffset = new Vector3(0, 0, 0);
 
