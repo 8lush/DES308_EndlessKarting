@@ -6,8 +6,8 @@ public class EndlessGameMode : MonoBehaviour
 {
     public GameObject straightTrack;
     public GameObject medTurnTrack;
-    public GameObject specialTrack1;
-    public GameObject specialTrack2;
+    public GameObject uTurnTrack;
+    public GameObject updownTrack;
 
     public Vector3 trackSpawnLocation = new Vector3(100, 50f, -90);
     Vector3 trackPositionOffset = new Vector3(0, 0, 0);
@@ -104,7 +104,7 @@ public class EndlessGameMode : MonoBehaviour
         switch (Random.Range(0, 4))
         {
             case 0:
-                trackSpecial = Instantiate(specialTrack1, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                trackSpecial = Instantiate(uTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
                 trackRotationOffset = trackRotationOffset + new Vector3(0, 180, 0);
                 AddTrackTurnOffset();
                 trackIntDirection++;
@@ -120,11 +120,11 @@ public class EndlessGameMode : MonoBehaviour
                 trackIntDirection--;
                 NormalizeTrackDirection();
                 AddTrackTurnOffset();
-                trackSpecial = Instantiate(specialTrack1, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                trackSpecial = Instantiate(uTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
                 trackRotationOffset = trackRotationOffset + new Vector3(0, 180, 0);
                 break;
             case 2:
-                trackSpecial = Instantiate(specialTrack2, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset + new Vector3(0, 180, 0)));
+                trackSpecial = Instantiate(updownTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset + new Vector3(0, 180, 0)));
                 trackPositionOffset = trackPositionOffset + new Vector3(0, 4, 0);
                 AddTrackForwardOffset();
                 AddTrackForwardOffset();
@@ -133,10 +133,10 @@ public class EndlessGameMode : MonoBehaviour
                 AddTrackForwardOffset();
                 AddTrackForwardOffset();
                 trackPositionOffset = trackPositionOffset + new Vector3(0, -4, 0);
-                trackSpecial = Instantiate(specialTrack2, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                trackSpecial = Instantiate(updownTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
                 break;
             default:
-                trackSpecial = Instantiate(specialTrack1, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                trackSpecial = Instantiate(uTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
                 trackRotationOffset = trackRotationOffset + new Vector3(0, 180, 0);
                 AddTrackTurnOffset();
                 trackIntDirection++;
