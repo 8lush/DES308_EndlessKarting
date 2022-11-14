@@ -9,13 +9,13 @@ public class StartIsland : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            EventManager.ActivateStartTrack();
-            DestroySelf();
+            EventManager.EventStartTrack();
+            Destroy(gameObject, 1f);
         }
     }
 
     void DestroySelf()
     {
-        Destroy(gameObject, 1f);
+        
     }
 }

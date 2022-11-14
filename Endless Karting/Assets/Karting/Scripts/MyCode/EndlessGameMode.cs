@@ -22,23 +22,23 @@ public class EndlessGameMode : MonoBehaviour
 
     private int trackIntDirection = 0;
 
-    private int b;
+    private int b = 0;
     private bool special = false;
 
 
     void OnEnable()
     {
-        EventManager.StartTrack += TestStartGame;
-        EventManager.TestTrackEvent += Test;
+        EventManager.StartTrack += InitialTrack;
+        EventManager.SpawnNextTrack += NextTrack;
     }
 
     void OnDisable()
     {
-        EventManager.StartTrack -= TestStartGame;
-        EventManager.TestTrackEvent += Test;
+        EventManager.StartTrack -= InitialTrack;
+        EventManager.SpawnNextTrack += NextTrack;
     }
 
-    void TestStartGame()
+    void InitialTrack()
     {
         //InvokeRepeating("BuildRoad", 0f, trackInstantiationFrequency);
         TrackForward();
@@ -46,14 +46,25 @@ public class EndlessGameMode : MonoBehaviour
         TrackForward();
     }
 
-     void Test()
+    void NextTrack()
     {
-        TrackForward();
-    }
-
-    void Start()
-    {
-        //InvokeRepeating("BuildRoad", 1.0f, trackInstantiationFrequency);
+        switch((b, special))
+        {
+            case (0, false):
+                TrackTurn();
+                special = !special;
+                b = Random.Range(minNumberofTrackForward, maxNumberofTrackForward + 1);
+                break;
+            case (0, true):
+                TrackSpecial();
+                special = !special;
+                b = Random.Range(minNumberofTrackForward, maxNumberofTrackForward + 1);
+                break;
+            default:
+                TrackForward();
+                b--;
+                break;
+        }
     }
 
     private void BuildRoad()
@@ -81,6 +92,7 @@ public class EndlessGameMode : MonoBehaviour
         }      
     }
 
+    // Spawns a straight track
     private void TrackForward()
     {
         GameObject trackForward = Instantiate(straightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
@@ -90,6 +102,7 @@ public class EndlessGameMode : MonoBehaviour
         AddTrackForwardOffset();
     }
 
+    // Spawns a left or right turn track
     private void TrackTurn()
     {
         GameObject trackTurn;
@@ -122,6 +135,7 @@ public class EndlessGameMode : MonoBehaviour
         
     }
 
+    // Spawns one of the special tracks
     private void TrackSpecial()
     {
         GameObject trackSpecial;
@@ -176,6 +190,7 @@ public class EndlessGameMode : MonoBehaviour
 
     }
 
+    // Keeps track of position offsets
     private void AddTrackForwardOffset()
     {
         switch (trackIntDirection)
@@ -198,6 +213,7 @@ public class EndlessGameMode : MonoBehaviour
         }
     }
 
+    // Keeps track of position offsets
     private void AddTrackTurnOffset()
     {
         switch (trackIntDirection)
@@ -220,6 +236,7 @@ public class EndlessGameMode : MonoBehaviour
         }
     }
 
+    // Keeps track of track direction
     private void NormalizeTrackDirection()
     {
         switch (trackIntDirection)

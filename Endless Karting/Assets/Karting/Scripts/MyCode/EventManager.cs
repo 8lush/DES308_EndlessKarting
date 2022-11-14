@@ -6,27 +6,15 @@ public class EventManager : MonoBehaviour
 {
     public delegate void Game();
     public static event Game StartTrack;
-    public static event Game TestTrackEvent;
+    public static event Game SpawnNextTrack;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public static void ActivateStartTrack()
+    public static void EventStartTrack()
     {
         StartTrack?.Invoke();
     }
 
-    public static void TestTrack()
+    public static void EventSpawnNextTrack()
     {
-        TestTrackEvent?.Invoke();
+        SpawnNextTrack?.Invoke();
     }
 }
