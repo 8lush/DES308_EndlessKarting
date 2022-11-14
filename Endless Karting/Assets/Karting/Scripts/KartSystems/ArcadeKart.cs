@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.VFX;
+using UnityEngine.SceneManagement;
 
 namespace KartGame.KartSystems
 {
@@ -15,6 +16,9 @@ namespace KartGame.KartSystems
             public float ElapsedTime;
             public float MaxTime;
         }
+
+        // My variables
+        float timer;
 
         [System.Serializable]
         public struct Stats
@@ -309,6 +313,7 @@ namespace KartGame.KartSystems
             GroundPercent = (float) groundedCount / 4.0f;
             AirPercent = 1 - GroundPercent;
 
+
             // apply vehicle physics
             if (m_CanMove)
             {
@@ -596,5 +601,28 @@ namespace KartGame.KartSystems
 
             ActivateDriftVFX(IsDrifting && GroundPercent > 0.0f);
         }
+
+        private void Update()
+        {
+            // Lose condition if kart hasn't been grounded for too long
+            if (AirPercent < 0.6)
+            {
+                timer = 0.0f;
+                return;
+            }
+
+            timer += Time.deltaTime;
+            if (timer > 1f)
+            {
+                timer = 0.0f;
+                Lost();
+            }
+        }
+
+        void Lost()
+        {
+            SceneManager.LoadScene("LoseScene");
+        }
+
     }
 }

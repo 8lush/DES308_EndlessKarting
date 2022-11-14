@@ -26,9 +26,34 @@ public class EndlessGameMode : MonoBehaviour
     private bool special = false;
 
 
+    void OnEnable()
+    {
+        EventManager.StartTrack += TestStartGame;
+        EventManager.TestTrackEvent += Test;
+    }
+
+    void OnDisable()
+    {
+        EventManager.StartTrack -= TestStartGame;
+        EventManager.TestTrackEvent += Test;
+    }
+
+    void TestStartGame()
+    {
+        //InvokeRepeating("BuildRoad", 0f, trackInstantiationFrequency);
+        TrackForward();
+        TrackForward();
+        TrackForward();
+    }
+
+     void Test()
+    {
+        TrackForward();
+    }
+
     void Start()
     {
-        InvokeRepeating("BuildRoad", 1.0f, trackInstantiationFrequency);
+        //InvokeRepeating("BuildRoad", 1.0f, trackInstantiationFrequency);
     }
 
     private void BuildRoad()
