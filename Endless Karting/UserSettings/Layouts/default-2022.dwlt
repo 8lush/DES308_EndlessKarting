@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Game
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 364
     height: 722.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -318,23 +318,23 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Karting/Scripts/MyCode
+    - Assets/Karting/ModularTrackKit/Prefabs
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Karting/Scripts/MyCode
+  - Assets/Karting/ModularTrackKit/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\redta\OneDrive - Abertay University\Documents\Unity
     Projects\DES308\Endless Karting
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 246.20001}
-    m_SelectedIDs: e05f0000
-    m_LastClickedID: 24544
-    m_ExpandedIDs: 00000000685f00006a5f00006c5f00006e5f0000705f0000725f0000c05f000000ca9a3b
+    scrollPos: {x: 0, y: 95}
+    m_SelectedIDs: 1e5e0000
+    m_LastClickedID: 24094
+    m_ExpandedIDs: 00000000e25d0000e45d0000e65d0000e85d0000ea5d0000ec5d0000105e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -362,7 +362,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000685f00006a5f00006c5f00006e5f0000705f0000725f0000
+    m_ExpandedIDs: 00000000e25d0000e45d0000e65d0000e85d0000ea5d0000ec5d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -494,21 +494,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: a2a3ffff4aa4ffff4cb5ffffe6faffff3c79000052800000
+      m_ExpandedIDs: e6fafffff65a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: DirectionalLight
+        m_OriginalName: DirectionalLight
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 22778
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 4}
       m_SearchString: 
@@ -777,9 +777,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 86.34664, y: 49.34258, z: -90.933395}
+    m_Target: {x: 99.77894, y: 59.533386, z: -90.57267}
     speed: 2
-    m_Value: {x: 86.34664, y: 49.34258, z: -90.933395}
+    m_Value: {x: 99.77894, y: 59.533386, z: -90.57267}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -825,13 +825,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.10050392, y: 0.702853, z: -0.10082075, w: -0.6972506}
+    m_Target: {x: -0.21716174, y: 0.4778056, z: -0.12266254, w: -0.8425824}
     speed: 2
-    m_Value: {x: -0.10048249, y: 0.7027032, z: -0.100799255, w: -0.69710195}
+    m_Value: {x: -0.21711306, y: 0.4776985, z: -0.12263504, w: -0.8423935}
   m_Size:
-    m_Target: 3.115137
+    m_Target: 2.4745376
     speed: 2
-    m_Value: 3.115137
+    m_Value: 2.4745376
   m_Ortho:
     m_Target: 0
     speed: 2

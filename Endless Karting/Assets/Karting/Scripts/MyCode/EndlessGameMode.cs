@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class EndlessGameMode : MonoBehaviour
 {
+    [Header("Track Prefabs")]
     public GameObject straightTrack;
     public GameObject medTurnTrack;
     public GameObject uTurnTrack;
     public GameObject updownTrack;
 
-    public Vector3 trackSpawnLocation = new Vector3(100, 50f, -90);
-    Vector3 trackPositionOffset = new Vector3(0, 0, 0);
-    Vector3 trackRotationOffset = new Vector3(0, 0, 0);
+    [Header("Track Start")]
+    public GameObject startingIsland;
+    private Vector3 trackSpawnLocation = new Vector3(0, 0, 0);
+    private Vector3 trackPositionOffset = new Vector3(0, 0, 0);
+    private Vector3 trackRotationOffset = new Vector3(0, 0, 0);
 
+    [Header("Track Spawning Timings")]
     public float trackSpawnDelay = 0.5f;
     public float trackDestroyDelay = 5f;
     public float trackInstantiationFrequency = 2f;
 
+    [Header("Track min/max")]
     public int minNumberofTrackForward = 2;
     public int maxNumberofTrackForward = 5;
 
     private int trackIntDirection = 0;
 
-    private int b = 0;
+    private int numofTrackForward = 0;
     private bool special = false;
 
 
@@ -35,12 +40,16 @@ public class EndlessGameMode : MonoBehaviour
     void OnDisable()
     {
         EventManager.StartTrack -= InitialTrack;
-        EventManager.SpawnNextTrack += NextTrack;
+        EventManager.SpawnNextTrack -= NextTrack;
+    }
+
+    private void Start()
+    {
+        trackSpawnLocation = startingIsland.transform.position + new Vector3(0, 0, 5);
     }
 
     void InitialTrack()
     {
-        //InvokeRepeating("BuildRoad", 0f, trackInstantiationFrequency);
         TrackForward();
         TrackForward();
         TrackForward();
@@ -48,48 +57,23 @@ public class EndlessGameMode : MonoBehaviour
 
     void NextTrack()
     {
-        switch((b, special))
+        switch((numofTrackForward, special))
         {
             case (0, false):
                 TrackTurn();
                 special = !special;
-                b = Random.Range(minNumberofTrackForward, maxNumberofTrackForward + 1);
+                numofTrackForward = Random.Range(minNumberofTrackForward, maxNumberofTrackForward + 1);
                 break;
             case (0, true):
                 TrackSpecial();
                 special = !special;
-                b = Random.Range(minNumberofTrackForward, maxNumberofTrackForward + 1);
+                numofTrackForward = Random.Range(minNumberofTrackForward, maxNumberofTrackForward + 1);
                 break;
             default:
                 TrackForward();
-                b--;
+                numofTrackForward--;
                 break;
         }
-    }
-
-    private void BuildRoad()
-    {
-        StartCoroutine(StraightTrackPieces());  
-    }
-
-    private IEnumerator StraightTrackPieces()
-    {
-        b = Random.Range(minNumberofTrackForward, maxNumberofTrackForward + 1);
-        for (int i = 0; i < b; i++)
-        {
-            TrackForward();
-            yield return new WaitForSeconds(trackSpawnDelay);
-        }
-        if (special)
-        {
-            TrackSpecial();
-            special = !special;
-        }
-        else 
-        {
-            TrackTurn();
-            special = !special;
-        }      
     }
 
     // Spawns a straight track
