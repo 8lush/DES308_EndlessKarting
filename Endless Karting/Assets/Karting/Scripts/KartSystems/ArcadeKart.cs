@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.VFX;
-using UnityEngine.SceneManagement;
+
 
 namespace KartGame.KartSystems
 {
@@ -621,7 +621,7 @@ namespace KartGame.KartSystems
 
         void Lost()
         {
-            SceneManager.LoadScene("LoseScene");
+            EventManager.EventEndTrack();
         }
 
     }
