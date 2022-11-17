@@ -57,7 +57,9 @@ public class EndlessGameMode : MonoBehaviour
 
     private void NextThreshold()
     {
-
+        NextTrack();
+        minNumberofTrackForward++;
+        maxNumberofTrackForward++;
     }
 
     void InitialTrack()
