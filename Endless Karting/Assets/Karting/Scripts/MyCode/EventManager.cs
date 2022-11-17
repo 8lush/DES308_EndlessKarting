@@ -9,6 +9,7 @@ public class EventManager : MonoBehaviour
     public static event Game StartTrack;
     public static event Game EndTrack;
     public static event Game SpawnNextTrack;
+    public static event Game NextThreshold;
 
     public static void EventStartTrack()
     {
@@ -24,5 +25,10 @@ public class EventManager : MonoBehaviour
     public static void EventSpawnNextTrack()
     {
         SpawnNextTrack?.Invoke();
+    }
+
+    public static void EventNextThreshold()
+    {
+        NextThreshold?.Invoke();
     }
 }

@@ -2,61 +2,96 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using KartGame.KartSystems;
 
-public class Score : MonoBehaviour
+namespace KartGame.UI
 {
-    public TextMeshProUGUI score;
-
-    private float currentScore;
-    private bool scoreCounting = false;
-
-    public float scoreMultiplier = 5f;
-
-
-    void OnEnable()
+    public class Score : MonoBehaviour
     {
-        EventManager.StartTrack += StartScoreCounter;
-        EventManager.EndTrack += StopScoreCounter;
-    }
+        public TextMeshProUGUI score;
 
-    void OnDisable()
-    {
-        EventManager.StartTrack -= StartScoreCounter;
-        EventManager.EndTrack -= StopScoreCounter;
-    }
+        public bool AutoFindKart = true;
+        public ArcadeKart KartController;
 
-    void Start()
-    {
-        currentScore = 0f;
-        PlayerPrefs.SetInt("LastScore", 0);
-    }
+        private float currentScore;
+        private bool scoreCounting = false;
 
-    void StartScoreCounter()
-    {
-        scoreCounting = true;
-    }
+        [Header("Difficulty Thresholds")]
+        public int[] scoreThresholds;
+        public int[] scoreMultiplier;
+        private int currentThreshold = 0;
 
-    void StopScoreCounter()
-    {
-        scoreCounting = false;
-        PlayerPrefs.SetInt("LastScore", Mathf.FloorToInt(currentScore));
-
-        if (currentScore > PlayerPrefs.GetInt("Highscore"))
+        void OnEnable()
         {
-            PlayerPrefs.SetInt("Highscore", Mathf.FloorToInt(currentScore));
-            PlayerPrefs.SetInt("NewHighscore", 1);
+            EventManager.StartTrack += StartScoreCounter;
+            EventManager.EndTrack += StopScoreCounter;
+        }
+
+        void OnDisable()
+        {
+            EventManager.StartTrack -= StartScoreCounter;
+            EventManager.EndTrack -= StopScoreCounter;
+        }
+
+        void Start()
+        {
+            currentScore = 0f;
+            PlayerPrefs.SetInt("LastScore", 0);
+
+            if (AutoFindKart)
+            {
+                ArcadeKart kart = FindObjectOfType<ArcadeKart>();
+                KartController = kart;
+            }
+
+            if (!KartController)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
+        void StartScoreCounter()
+        {
+            scoreCounting = true;
+        }
+
+        void StopScoreCounter()
+        {
+            scoreCounting = false;
+            PlayerPrefs.SetInt("LastScore", Mathf.FloorToInt(currentScore));
+
+            if (currentScore > PlayerPrefs.GetInt("Highscore"))
+            {
+                PlayerPrefs.SetInt("Highscore", Mathf.FloorToInt(currentScore));
+                PlayerPrefs.SetInt("NewHighscore", 1);
+            }
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            float speed = KartController.Rigidbody.velocity.magnitude;
+            float topSpeed = KartController.TopSpeedArray[currentThreshold];
+
+            if (scoreCounting)
+                currentScore += Time.deltaTime * (speed / topSpeed) * scoreMultiplier[currentThreshold];
+            //currentScore += Time.deltaTime * scoreMultiplier[currentThreshold];
+
+            score.text = string.Format($"{Mathf.FloorToInt(currentScore):D7}");
+
+            if (!scoreCounting)
+                score.text += string.Format($"\n Highscore: {PlayerPrefs.GetInt("Highscore"):D7}");
+
+            if (currentScore > scoreThresholds[currentThreshold])
+            {
+                if (currentThreshold < scoreThresholds.Length - 1)
+                {
+                    currentThreshold++;
+                    EventManager.EventNextThreshold();
+                }
+            }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (scoreCounting)
-        currentScore += Time.deltaTime * scoreMultiplier;
-
-        score.text = string.Format($"{Mathf.FloorToInt(currentScore):D7}");
-
-        if(!scoreCounting)
-        score.text += string.Format($"\n Highscore: {PlayerPrefs.GetInt("Highscore"):D7}");
-    }
 }
+
+

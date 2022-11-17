@@ -9,6 +9,7 @@ public class EndlessGameMode : MonoBehaviour
     public GameObject medTurnTrack;
     public GameObject uTurnTrack;
     public GameObject updownTrack;
+    public GameObject spiralUpTrack;
 
     [Header("Track Start")]
     public GameObject startingIsland;
@@ -157,6 +158,12 @@ public class EndlessGameMode : MonoBehaviour
                 AddTrackForwardOffset();
                 trackPositionOffset = trackPositionOffset + new Vector3(0, -4, 0);
                 trackSpecial = Instantiate(updownTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                break;
+            case 4:
+                trackPositionOffset = trackPositionOffset + new Vector3(0, -8, 0);
+                trackRotationOffset = trackRotationOffset + new Vector3(0, 180, 0);
+                trackSpecial = Instantiate(spiralUpTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                trackRotationOffset = trackRotationOffset + new Vector3(0, -180, 0);
                 break;
             default:
                 trackSpecial = Instantiate(uTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
