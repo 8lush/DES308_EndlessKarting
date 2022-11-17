@@ -6,6 +6,8 @@ public class EndlessGameMode : MonoBehaviour
 {
     [Header("Track Prefabs")]
     public GameObject straightTrack;
+    public GameObject trapLeftTrack;
+    public GameObject trapRightTrack;
     public GameObject medTurnTrack;
     public GameObject uTurnTrack;
     public GameObject updownTrack;
@@ -25,10 +27,12 @@ public class EndlessGameMode : MonoBehaviour
     [Header("Track min/max")]
     public int minNumberofTrackForward = 2;
     public int maxNumberofTrackForward = 5;
+    private int numofTrackForward = 0;
+
+    private int currentThreshold = 0;
 
     private int trackIntDirection = 0;
-
-    private int numofTrackForward = 0;
+    
     private bool special = false;
 
 
@@ -36,17 +40,24 @@ public class EndlessGameMode : MonoBehaviour
     {
         EventManager.StartTrack += InitialTrack;
         EventManager.SpawnNextTrack += NextTrack;
+        EventManager.NextThreshold += NextThreshold;
     }
 
     void OnDisable()
     {
         EventManager.StartTrack -= InitialTrack;
         EventManager.SpawnNextTrack -= NextTrack;
+        EventManager.NextThreshold -= NextThreshold;
     }
 
     private void Start()
     {
         trackSpawnLocation = startingIsland.transform.position + new Vector3(0, 0, 5);
+    }
+
+    private void NextThreshold()
+    {
+
     }
 
     void InitialTrack()
@@ -80,7 +91,30 @@ public class EndlessGameMode : MonoBehaviour
     // Spawns a straight track
     private void TrackForward()
     {
-        GameObject trackForward = Instantiate(straightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+        GameObject trackForward;
+
+        int i = Random.Range(0, 50);
+
+        if (i < 40)
+        {
+            trackForward = Instantiate(straightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+        }
+
+        else
+        {
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    trackForward = Instantiate(trapLeftTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                    break;
+                case 1:
+                    trackForward = Instantiate(trapRightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                    break;
+                default:
+                    trackForward = Instantiate(trapRightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                    break;
+            }
+        }
 
         Destroy(trackForward, trackDestroyDelay);
 
