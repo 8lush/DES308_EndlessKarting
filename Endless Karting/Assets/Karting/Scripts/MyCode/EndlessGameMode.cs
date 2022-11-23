@@ -30,6 +30,8 @@ public class EndlessGameMode : MonoBehaviour
     public int minNumberofTrackForward = 2;
     public int maxNumberofTrackForward = 5;
     private int numofTrackForward = 0;
+    private int trapCooldownCurrent = 2;
+    private int trapCooldownBase = 1;
 
     private int currentThreshold = 0;
 
@@ -71,6 +73,7 @@ public class EndlessGameMode : MonoBehaviour
     private void NextThreshold()
     {
         currentThreshold++;
+        trackDestroyDelay -= 0.25f;
 
         NextTrack();
         minNumberofTrackForward++;
@@ -90,6 +93,8 @@ public class EndlessGameMode : MonoBehaviour
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 0 });
                 listTurnTracks.Add(new trackInfo { trackIndex = 2 });
                 listTurnTracks.Add(new trackInfo { trackIndex = 3 });
+
+                trapCooldownBase++;
                 break;
             case 3:
                 listSpecialTracks.Add(new trackInfo { trackIndex = 3 });
@@ -100,6 +105,7 @@ public class EndlessGameMode : MonoBehaviour
 
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 5 });
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 6 });
+                trapCooldownBase++;
                 break;
             default:
                 break;
@@ -141,13 +147,17 @@ public class EndlessGameMode : MonoBehaviour
 
         int i = Random.Range(0, 50);
 
-        if (i < 40)
+        if (trapCooldownCurrent > 0)
         {
             trackForward = Instantiate(straightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+
+            trapCooldownCurrent--;
         }
 
         else
         {
+            trapCooldownCurrent = trapCooldownBase;
+
             switch (Random.Range(0, 2))
             {
                 case 0:
@@ -294,6 +304,7 @@ public class EndlessGameMode : MonoBehaviour
 
         Destroy(trackSpecial, trackDestroyDelay);
 
+        trapCooldownCurrent = trapCooldownBase;
     }
 
     // Keeps track of position offsets
