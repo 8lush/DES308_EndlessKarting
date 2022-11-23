@@ -615,7 +615,7 @@ namespace KartGame.KartSystems
         private void Update()
         {
             // Lose condition if kart hasn't been grounded for too long
-            if (AirPercent < 0.6)
+            if (AirPercent < 0.9)
             {
                 timer = 0.0f;
 

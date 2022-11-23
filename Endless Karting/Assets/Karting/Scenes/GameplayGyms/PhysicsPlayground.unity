@@ -1024,7 +1024,7 @@ MonoBehaviour:
   score: {fileID: 299868658}
   AutoFindKart: 1
   KartController: {fileID: 0}
-  scoreThresholds: 32000000c8000000f4010000e8030000
+  scoreThresholds: c8000000f4010000e8030000d0070000
   scoreMultiplier: 050000000a0000001400000028000000
 --- !u!114 &299868658
 MonoBehaviour:
@@ -1480,7 +1480,7 @@ PrefabInstance:
     - target: {fileID: 1579282987822796750, guid: 941fac9249b6442cdb2d3f23472128e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 100
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1579282987822796750, guid: 941fac9249b6442cdb2d3f23472128e2,
         type: 3}
@@ -1490,7 +1490,7 @@ PrefabInstance:
     - target: {fileID: 1579282987822796750, guid: 941fac9249b6442cdb2d3f23472128e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 50
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1579282987822796750, guid: 941fac9249b6442cdb2d3f23472128e2,
         type: 3}
@@ -3856,7 +3856,7 @@ PrefabInstance:
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 39.9
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
@@ -3866,17 +3866,17 @@ PrefabInstance:
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
@@ -4212,7 +4212,7 @@ PrefabInstance:
     - target: {fileID: 593336770641352614, guid: 4ceb0af72927442b89171edb85a2ccfa,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 110
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 4ceb0af72927442b89171edb85a2ccfa,
         type: 3}
@@ -4222,7 +4222,7 @@ PrefabInstance:
     - target: {fileID: 593336770641352614, guid: 4ceb0af72927442b89171edb85a2ccfa,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 4ceb0af72927442b89171edb85a2ccfa,
         type: 3}
@@ -5700,18 +5700,27 @@ MonoBehaviour:
     type: 3}
   medTurnTrack: {fileID: 43436360972620429, guid: 4f11626d6f47a444289c55bbe896ec98,
     type: 3}
+  largeTurnTrack: {fileID: 6602977218683501769, guid: 06604f26f581c4de08c3f45572924c7d,
+    type: 3}
   uTurnTrack: {fileID: 8135817075816661729, guid: 40edbcc1d6247412ea82349e34d5add5,
     type: 3}
   updownTrack: {fileID: 7841096914572286500, guid: 1c994073ac1d5445695ce53ec5195532,
     type: 3}
-  spiralUpTrack: {fileID: 7609577426192536233, guid: 291ac874e44fb46a1a05a1815cfc4f52,
+  scurveRightTrack: {fileID: 593336770641709958, guid: 815aae46d0dac409c9d6902909a1db0d,
+    type: 3}
+  scurveLeftTrack: {fileID: 593336770641709958, guid: 4ceb0af72927442b89171edb85a2ccfa,
     type: 3}
   startingIsland: {fileID: 977480980}
   trackSpawnDelay: 0.5
-  trackDestroyDelay: 4
+  trackDestroyDelay: 5
   trackInstantiationFrequency: 2
   minNumberofTrackForward: 2
   maxNumberofTrackForward: 3
+  listTurnTracks:
+  - trackIndex: 0
+  - trackIndex: 1
+  listSpecialTracks:
+  - trackIndex: 0
 --- !u!4 &2121216334
 Transform:
   m_ObjectHideFlags: 0
