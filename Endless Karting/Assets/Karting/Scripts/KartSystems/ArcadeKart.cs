@@ -612,6 +612,12 @@ namespace KartGame.KartSystems
             EventManager.NextThreshold -= SpeedUp;
         }
 
+        private void Start()
+        {
+            baseStats.TopSpeed = TopSpeedArray[currentThreshold];
+            baseStats.Acceleration = AccelarationArray[currentThreshold];
+        }
+
         private void Update()
         {
             // Lose condition if kart hasn't been grounded for too long

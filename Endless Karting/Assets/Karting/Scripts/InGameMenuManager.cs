@@ -17,6 +17,7 @@ public class InGameMenuManager : MonoBehaviour
     public GameObject controlImage;
 
     //PlayerInputHandler m_PlayerInputsHandler;
+    [SerializeField]
     FramerateCounter m_FramerateCounter;
 
     void Start()

@@ -73,7 +73,7 @@ public class EndlessGameMode : MonoBehaviour
     private void NextThreshold()
     {
         currentThreshold++;
-        trackDestroyDelay -= 0.25f;
+        trackDestroyDelay -= 0.15f;
 
         NextTrack();
         minNumberofTrackForward++;
@@ -94,7 +94,7 @@ public class EndlessGameMode : MonoBehaviour
                 listTurnTracks.Add(new trackInfo { trackIndex = 2 });
                 listTurnTracks.Add(new trackInfo { trackIndex = 3 });
 
-                trapCooldownBase++;
+                //trapCooldownBase++;
                 break;
             case 3:
                 listSpecialTracks.Add(new trackInfo { trackIndex = 3 });
@@ -105,7 +105,7 @@ public class EndlessGameMode : MonoBehaviour
 
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 5 });
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 6 });
-                trapCooldownBase++;
+                //trapCooldownBase++;
                 break;
             default:
                 break;
