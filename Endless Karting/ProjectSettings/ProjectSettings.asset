@@ -927,11 +927,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 2
-  cloudProjectId: 
+  cloudProjectId: 116fec12-a601-4a7b-a747-8b0a941504ef
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Endless Karting
+  organizationId: tadas-4195220
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

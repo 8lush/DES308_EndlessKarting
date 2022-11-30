@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.abertay.analytics": "https://github.com/Abertay-University-SDI/AbertayAnalytics.git",
     "com.unity.barracuda": "2.0.0",
     "com.unity.burst": "1.7.3",
     "com.unity.cinemachine": "2.8.6",
