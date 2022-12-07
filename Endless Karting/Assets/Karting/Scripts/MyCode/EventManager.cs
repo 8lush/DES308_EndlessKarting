@@ -15,12 +15,12 @@ public class EventManager : MonoBehaviour
     public static void EventStartTrack()
     {
         StartTrack?.Invoke();
+        AnalyticsManager.GetGAInstance.SendProgressionEvent(GameAnalyticsSDK.GAProgressionStatus.Start, "Test Track Start");
     }
 
     public static void EventEndTrack()
     {
         EndTrack?.Invoke();
-        SceneManager.LoadScene("LoseScene");
     }
 
     public static void EventSpawnNextTrack()
@@ -31,5 +31,11 @@ public class EventManager : MonoBehaviour
     public static void EventNextThreshold()
     {
         NextThreshold?.Invoke();
+    }
+
+    public static void TrackComplete(float Score)
+    {
+        AnalyticsManager.GetGAInstance.SendProgressionEvent(GameAnalyticsSDK.GAProgressionStatus.Complete, "Test Track Complete", "Score: " + Score);
+        SceneManager.LoadScene("LoseScene");
     }
 }
