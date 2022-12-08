@@ -33,9 +33,9 @@ public class EventManager : MonoBehaviour
         NextThreshold?.Invoke();
     }
 
-    public static void TrackComplete(float Score)
+    public static void TrackComplete(float score)
     {
-        AnalyticsManager.GetGAInstance.SendProgressionEvent(GameAnalyticsSDK.GAProgressionStatus.Complete, "Test Track Complete", "Score: " + Score);
+        AnalyticsManager.GetGAInstance.SendProgressionEvent(GameAnalyticsSDK.GAProgressionStatus.Complete, "Test Track Complete", "Score: " + score);
         SceneManager.LoadScene("LoseScene");
     }
 }

@@ -66,6 +66,7 @@ namespace KartGame.UI
                 PlayerPrefs.SetInt("NewHighscore", 1);
             }
 
+            //int finalScore = (int)currentScore;
             EventManager.TrackComplete(currentScore);
         }
 

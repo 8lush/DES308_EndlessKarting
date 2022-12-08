@@ -1095,7 +1095,7 @@ PrefabInstance:
     - target: {fileID: 1810374959312665362, guid: d0e1b03230cdb0b4684e322e8b49bdfe,
         type: 3}
       propertyPath: m_GameAnalytics
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1810374959312665362, guid: d0e1b03230cdb0b4684e322e8b49bdfe,
         type: 3}
