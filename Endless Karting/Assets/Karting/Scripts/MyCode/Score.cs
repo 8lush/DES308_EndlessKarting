@@ -66,8 +66,8 @@ namespace KartGame.UI
                 PlayerPrefs.SetInt("NewHighscore", 1);
             }
 
-            //int finalScore = (int)currentScore;
-            EventManager.TrackComplete(currentScore);
+            int finalScore = (int)currentScore;
+            EventManager.TrackComplete(finalScore);
         }
 
         // Update is called once per frame

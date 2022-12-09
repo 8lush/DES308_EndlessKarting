@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Abertay.Analytics;
+using GameAnalyticsSDK;
 
 public class EventManager : MonoBehaviour
 {
@@ -12,10 +13,15 @@ public class EventManager : MonoBehaviour
     public static event Game SpawnNextTrack;
     public static event Game NextThreshold;
 
+    private void Start()
+    {
+        GameAnalyticsSDK.GameAnalytics.Initialize();
+    }
+
     public static void EventStartTrack()
     {
         StartTrack?.Invoke();
-        AnalyticsManager.GetGAInstance.SendProgressionEvent(GameAnalyticsSDK.GAProgressionStatus.Start, "Test Track Start");
+        AnalyticsManager.GetGAInstance.SendProgressionEvent(GameAnalyticsSDK.GAProgressionStatus.Start, "Track started");
     }
 
     public static void EventEndTrack()
@@ -33,9 +39,9 @@ public class EventManager : MonoBehaviour
         NextThreshold?.Invoke();
     }
 
-    public static void TrackComplete(float score)
+    public static void TrackComplete(int score)
     {
-        AnalyticsManager.GetGAInstance.SendProgressionEvent(GameAnalyticsSDK.GAProgressionStatus.Complete, "Test Track Complete", "Score: " + score);
+        AnalyticsManager.GetGAInstance.SendProgressionEvent(GameAnalyticsSDK.GAProgressionStatus.Complete, "Track completed", score);
         SceneManager.LoadScene("LoseScene");
     }
 }
