@@ -629,6 +629,7 @@ namespace KartGame.KartSystems
             }
 
             timer += Time.deltaTime;
+
             if (timer > 1f)
             {
                 timer = 0.0f;
