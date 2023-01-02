@@ -21,6 +21,14 @@ namespace KartGame.UI
         public int[] scoreMultiplier;
         private int currentThreshold = 0;
 
+        // Speed variables
+        private float baseTopSpeed;
+        private float topSpeed;
+        private float baseAcceleration;
+        private float acceleration;
+        private float reverseTopSpeed;
+        private float reverseAcceleration;
+
         void OnEnable()
         {
             EventManager.StartTrack += StartScoreCounter;
@@ -42,6 +50,8 @@ namespace KartGame.UI
             {
                 ArcadeKart kart = FindObjectOfType<ArcadeKart>();
                 KartController = kart;
+                baseTopSpeed = KartController.baseStats.TopSpeed;
+                baseAcceleration = KartController.baseStats.Acceleration;
             }
 
             if (!KartController)
@@ -70,21 +80,32 @@ namespace KartGame.UI
             EventManager.TrackComplete(finalScore);
         }
 
-        // Update is called once per frame
         void Update()
         {
             float speed = KartController.Rigidbody.velocity.magnitude;
-            float topSpeed = KartController.TopSpeedArray[currentThreshold];
-
+            
+            // Updates current score
             if (scoreCounting)
                 currentScore += Time.deltaTime * (speed / topSpeed) * scoreMultiplier[currentThreshold];
-            //currentScore += Time.deltaTime * scoreMultiplier[currentThreshold];
 
+            // Gradual speed increase
+            topSpeed = baseTopSpeed + ((baseTopSpeed / 100) * (currentScore / 20));
+            acceleration = baseAcceleration + ((baseAcceleration / 100) * (currentScore / 20));
+            reverseTopSpeed = topSpeed / 2f;
+            reverseAcceleration = acceleration;
+
+            KartController.baseStats.TopSpeed = topSpeed;
+            KartController.baseStats.Acceleration = acceleration;
+            KartController.baseStats.ReverseSpeed = reverseTopSpeed;
+            KartController.baseStats.ReverseAcceleration = reverseAcceleration;
+
+            // Displays score
             score.text = string.Format($"{Mathf.FloorToInt(currentScore):D7}");
 
             if (!scoreCounting)
                 score.text += string.Format($"\n Highscore: {PlayerPrefs.GetInt("Highscore"):D7}");
 
+            // Moves to the next threshold
             if (currentScore > scoreThresholds[currentThreshold])
             {
                 if (currentThreshold < scoreThresholds.Length - 1)
@@ -92,6 +113,9 @@ namespace KartGame.UI
                     currentThreshold++;
                     EventManager.EventNextThreshold();
                 }
+
+                Debug.Log(topSpeed);
+                Debug.Log(acceleration);
             }
         }
     }

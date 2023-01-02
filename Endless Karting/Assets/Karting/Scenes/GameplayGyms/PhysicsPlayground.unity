@@ -1369,8 +1369,8 @@ MonoBehaviour:
   score: {fileID: 299868658}
   AutoFindKart: 1
   KartController: {fileID: 0}
-  scoreThresholds: 64000000f4010000e8030000d0070000
-  scoreMultiplier: 050000000a0000001400000028000000
+  scoreThresholds: 640000002c01000058020000e8030000
+  scoreMultiplier: 0500000007000000090000000a000000
 --- !u!114 &299868658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4204,8 +4204,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 100
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
@@ -4215,7 +4220,7 @@ PrefabInstance:
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39.9
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
@@ -6099,8 +6104,8 @@ MonoBehaviour:
   trackSpawnDelay: 0.5
   trackDestroyDelay: 5
   trackInstantiationFrequency: 2
-  minNumberofTrackForward: 2
-  maxNumberofTrackForward: 3
+  minNumberofTrackForward: 3
+  maxNumberofTrackForward: 5
   listTurnTracks:
   - trackIndex: 0
   - trackIndex: 1
@@ -7110,7 +7115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats:
-    TopSpeed: 24
+    TopSpeed: 20
     Acceleration: 8
     ReverseSpeed: 10
     ReverseAcceleration: 3
@@ -7156,17 +7161,6 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 4294967291
-  currentThreshold: 0
-  TopSpeedArray:
-  - 20
-  - 24
-  - 28
-  - 32
-  AccelarationArray:
-  - 8
-  - 10
-  - 12
-  - 14
 --- !u!114 &4810912517534767555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7488,7 +7482,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4810912519539360346}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.582, z: -0.10700226}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -17,9 +17,6 @@ namespace KartGame.KartSystems
             public float MaxTime;
         }
 
-        // My variables
-        float timer;
-
         [System.Serializable]
         public struct Stats
         {
@@ -602,21 +599,9 @@ namespace KartGame.KartSystems
             ActivateDriftVFX(IsDrifting && GroundPercent > 0.0f);
         }
 
-        void OnEnable()
-        {
-            EventManager.NextThreshold += SpeedUp;
-        }
 
-        void OnDisable()
-        {
-            EventManager.NextThreshold -= SpeedUp;
-        }
-
-        private void Start()
-        {
-            baseStats.TopSpeed = TopSpeedArray[currentThreshold];
-            baseStats.Acceleration = AccelarationArray[currentThreshold];
-        }
+        // Lose condition variable
+        float timer;
 
         private void Update()
         {
@@ -640,19 +625,6 @@ namespace KartGame.KartSystems
         void Lost()
         {
             EventManager.EventEndTrack();
-        }
-
-        [Header("Score Thresholds")]
-        public int currentThreshold = 0;
-        public float[] TopSpeedArray;
-        public float[] AccelarationArray;
-
-        void SpeedUp()
-        {
-            currentThreshold++;
-
-            baseStats.TopSpeed = TopSpeedArray[currentThreshold];
-            baseStats.Acceleration = AccelarationArray[currentThreshold];
         }
 
     }
