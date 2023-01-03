@@ -6063,6 +6063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2121216334}
   - component: {fileID: 2121216333}
+  - component: {fileID: 2121216335}
   m_Layer: 0
   m_Name: GameMode
   m_TagString: Untagged
@@ -6126,6 +6127,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2121216335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121216332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347a9b08659077b4183216b9b735d9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackPieces: []
+  speed: 2
+  trackLifespan: 5
+  trackRed: 3
+  trackDown: 0.3
+  trackDestroyDelay: 1
+  maxQueueCount: 13
 --- !u!4 &2136800987 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1579282987822796750, guid: 941fac9249b6442cdb2d3f23472128e2,

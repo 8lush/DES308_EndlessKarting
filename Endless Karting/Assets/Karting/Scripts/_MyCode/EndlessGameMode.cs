@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EndlessGameMode : MonoBehaviour
 {
+    // References
+    private TrackDeletionManager m_DeletionManager;
+
     [Header("Track Prefabs")]
     public GameObject straightTrack;
     public GameObject trapLeftTrack;
@@ -34,10 +37,9 @@ public class EndlessGameMode : MonoBehaviour
     private int trapCooldownCurrent = 2;
     private int trapCooldownBase = 1;
 
-    private int currentThreshold = 0;
-
-    private int trackIntDirection = 0;
-    
+    // Variables tracking changes
+    private int currentThreshold = 0;   
+    private int trackIntDirection = 0;  
     private bool special = false;
 
     [SerializeField]
@@ -69,16 +71,12 @@ public class EndlessGameMode : MonoBehaviour
     private void Start()
     {
         trackSpawnLocation = startingIsland.transform.position + new Vector3(0, 0, 5);
+        m_DeletionManager = GetComponent<TrackDeletionManager>();
     }
 
     private void NextThreshold()
     {
         currentThreshold++;
-        trackDestroyDelay -= 0.1f;
-
-        NextTrack();
-        minNumberofTrackForward++;
-        maxNumberofTrackForward++;
 
         switch (currentThreshold)
         {
@@ -91,22 +89,29 @@ public class EndlessGameMode : MonoBehaviour
             case 2:
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 0 });
 
-                listTurnTracks.Add(new trackInfo { trackIndex = 2 });
-                listTurnTracks.Add(new trackInfo { trackIndex = 3 });
-
-                //trapCooldownBase++;
-                break;
-            case 3:
                 listSpecialTracks.Add(new trackInfo { trackIndex = 3 });
                 listSpecialTracks.Add(new trackInfo { trackIndex = 4 });
 
+                NextTrack();
+                minNumberofTrackForward++;
+                maxNumberofTrackForward++;
+                break;
+            case 3:
+                listTurnTracks.Add(new trackInfo { trackIndex = 2 });
+                listTurnTracks.Add(new trackInfo { trackIndex = 3 });
+
+                trapCooldownBase++;
+                break;
+            case 4:
                 listTurnTracks.Remove(new trackInfo { trackIndex = 0 });
                 listTurnTracks.Remove(new trackInfo { trackIndex = 1 });
 
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 5 });
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 6 });
 
-                trapCooldownBase++;
+                NextTrack();
+                minNumberofTrackForward++;
+                maxNumberofTrackForward++;
                 break;
             default:
                 break;
@@ -171,7 +176,8 @@ public class EndlessGameMode : MonoBehaviour
             }
         }
 
-        Destroy(trackForward, trackDestroyDelay);
+        //Destroy(trackForward, trackDestroyDelay);
+        m_DeletionManager.AddToList(trackForward);     
 
         AddTrackForwardOffset();
     }
@@ -217,10 +223,11 @@ public class EndlessGameMode : MonoBehaviour
                 trackRotationOffset = trackRotationOffset + new Vector3(0, 90, 0);
                 NormalizeTrackDirection(1);
                 break;
-        }        
+        }
 
-        Destroy(trackTurn, trackDestroyDelay);
-        
+        //Destroy(trackTurn, trackDestroyDelay);
+        m_DeletionManager.AddToList(trackTurn);
+
     }
 
     // Spawns one of the special tracks
@@ -282,7 +289,11 @@ public class EndlessGameMode : MonoBehaviour
                 break;
         }
 
-        Destroy(trackSpecial, trackDestroyDelay);
+        //Destroy(trackSpecial, trackDestroyDelay);
+        if(trackSpecial != null)
+        {
+            m_DeletionManager.AddToList(trackSpecial);
+        }
 
         trapCooldownCurrent = trapCooldownBase;
     }

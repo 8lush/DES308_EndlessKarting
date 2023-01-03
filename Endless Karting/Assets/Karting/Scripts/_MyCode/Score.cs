@@ -106,16 +106,17 @@ namespace KartGame.UI
                 score.text += string.Format($"\n Highscore: {PlayerPrefs.GetInt("Highscore"):D7}");
 
             // Moves to the next threshold
-            if (currentScore > scoreThresholds[currentThreshold])
+            if (currentThreshold < scoreThresholds.Length - 1)
             {
-                if (currentThreshold < scoreThresholds.Length - 1)
+                if (currentScore > scoreThresholds[currentThreshold])
                 {
                     currentThreshold++;
+                    Debug.Log(currentThreshold);
                     EventManager.EventNextThreshold();
-                }
 
-                Debug.Log(topSpeed);
-                Debug.Log(acceleration);
+                    Debug.Log(topSpeed);
+                    Debug.Log(acceleration);
+                }
             }
         }
     }
