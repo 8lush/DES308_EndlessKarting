@@ -615,7 +615,7 @@ namespace KartGame.KartSystems
 
             timer += Time.deltaTime;
 
-            if (timer > 1f)
+            if (timer > 1.5f)
             {
                 timer = 0.0f;
                 Lost();

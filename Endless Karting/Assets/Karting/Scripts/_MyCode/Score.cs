@@ -100,10 +100,10 @@ namespace KartGame.UI
             KartController.baseStats.ReverseAcceleration = reverseAcceleration;
 
             // Displays score
-            score.text = string.Format($"{Mathf.FloorToInt(currentScore):D7}");
+            score.text = string.Format($"{Mathf.FloorToInt(currentScore):D5}");
 
             if (!scoreCounting)
-                score.text += string.Format($"\n Highscore: {PlayerPrefs.GetInt("Highscore"):D7}");
+                score.text += string.Format($"\n Highscore: {PlayerPrefs.GetInt("Highscore"):D5}");
 
             // Moves to the next threshold
             if (currentThreshold < scoreThresholds.Length - 1)

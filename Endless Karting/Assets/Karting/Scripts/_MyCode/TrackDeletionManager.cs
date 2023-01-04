@@ -15,21 +15,15 @@ public class TrackDeletionManager : MonoBehaviour
     [SerializeField] private float speed = 1f;
     [SerializeField] private float trackLifespan = 4f;
     [SerializeField] private float trackRed = 2f;
+    [SerializeField] private float trackYellow = 2f;
     [SerializeField] private float trackDown = 1f;
-    [SerializeField] private float trackDestroyDelay = 1f;
 
     // Working variables
-    private float _deleteDelay1 = 2f;
-    private float _deleteDelay2 = 1f;
-
     private int trackIndex = 0;
     private float deleteTime;
 
     public float maxQueueCount = 15;
-
-    // Tracking variables
-    private int deletedTracks = 0;
-    private bool deleting = false;
+    private bool maxQueueExceeded = false;
 
     GameObject trackPiece;
 
@@ -52,7 +46,6 @@ public class TrackDeletionManager : MonoBehaviour
                 switch (first)
                 {
                     case true:
-                        //trackIndex = trackPieces.IndexOf(trackPiece);
                         trackIndex = trackPieces.IndexOf(trackPieces.First());
                         first = false;
                         break;
@@ -62,14 +55,24 @@ public class TrackDeletionManager : MonoBehaviour
                 }
 
                 trackPiece = trackPieces[trackIndex];
-
                 deleteTime = deleteTimers[trackIndex];
-                deleteTimers[trackIndex] -= Time.deltaTime;
+
+                maxQueueExceeded = maxQueueCount <= trackPieces.Count;
+
+                switch (maxQueueExceeded)
+                {
+                    case true:
+                        deleteTimers[trackIndex] -= Time.deltaTime * 3f;
+                        break;
+                    case false:
+                        deleteTimers[trackIndex] -= Time.deltaTime;
+                        break;
+                }
+
 
                 if (deleteTime <= 0f)
                 {
                     Destroy(trackPiece);
-                    deletedTracks++;
                     trackPieces.RemoveAt(trackIndex);
 
                     deleteTimers.RemoveAt(trackIndex);
@@ -83,46 +86,11 @@ public class TrackDeletionManager : MonoBehaviour
                 {
                     trackPiece.GetComponent<Renderer>().material.color = Color.red;
                 }
+                else if (deleteTime <= trackYellow)
+                {
+                    trackPiece.GetComponent<Renderer>().material.color = Color.yellow;
+                }
             }
-
-            /*
-            if (trackPieces.Count > maxQueueCount)
-            {
-                _deleteDelay1 = 0;
-                _deleteDelay2 = 0;
-            }
-
-            if (!deleting)
-            {
-                deleting = true;
-                trackPiece = trackPieces.First();
-            }
-
-            // Turn object red
-            trackPiece.GetComponent<Renderer>().material.color = Color.red;
-
-            _deleteDelay1 -= Time.deltaTime;
-
-            // Start moving object down after deleteDelay1 amount of time
-            if (_deleteDelay1 <= 0)
-            {
-                // Move object downwards
-                trackPiece.transform.position += Vector3.down * speed * Time.deltaTime;
-
-                _deleteDelay2 -= Time.deltaTime;
-            }
-
-            // Delete object after deleteDelay2 amount of time
-            if (_deleteDelay2 <= 0)
-            {
-                Destroy(trackPiece);
-                deletedTracks++;
-                trackPieces.Dequeue();
-
-                _deleteDelay1 = deleteDelay1;
-                _deleteDelay2 = deleteDelay2;
-                deleting = false;
-            } */
         }
         
     }
@@ -130,14 +98,9 @@ public class TrackDeletionManager : MonoBehaviour
     public void AddToList(GameObject trackReference)
     {
         trackPieces.Add(trackReference);
-        Debug.Log("List count " + trackPieces.Count);
 
         int index = trackPieces.IndexOf(trackReference);
         deleteTimers.Insert(index, trackLifespan);
     }
 
-    private IEnumerator DeleteTrack(float time)
-    {
-        yield return new WaitForSeconds(time);
-    }
 }

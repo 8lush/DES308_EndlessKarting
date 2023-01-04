@@ -93,6 +93,7 @@ public class EndlessGameMode : MonoBehaviour
                 listSpecialTracks.Add(new trackInfo { trackIndex = 4 });
 
                 NextTrack();
+                m_DeletionManager.maxQueueCount++;
                 minNumberofTrackForward++;
                 maxNumberofTrackForward++;
                 break;
@@ -110,6 +111,7 @@ public class EndlessGameMode : MonoBehaviour
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 6 });
 
                 NextTrack();
+                m_DeletionManager.maxQueueCount++;
                 minNumberofTrackForward++;
                 maxNumberofTrackForward++;
                 break;

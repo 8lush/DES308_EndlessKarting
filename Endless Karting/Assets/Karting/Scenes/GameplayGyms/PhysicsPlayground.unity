@@ -1369,8 +1369,8 @@ MonoBehaviour:
   score: {fileID: 299868658}
   AutoFindKart: 1
   KartController: {fileID: 0}
-  scoreThresholds: 640000002c01000058020000e8030000
-  scoreMultiplier: 0500000007000000090000000a000000
+  scoreThresholds: 640000002c01000058020000e803000000000000
+  scoreMultiplier: 0500000007000000090000000a0000000a000000
 --- !u!114 &299868658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6140,11 +6140,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackPieces: []
-  speed: 2
-  trackLifespan: 5
-  trackRed: 3
-  trackDown: 0.3
-  trackDestroyDelay: 1
+  speed: 3
+  trackLifespan: 6
+  trackRed: 2
+  trackYellow: 3
+  trackDown: 1
   maxQueueCount: 13
 --- !u!4 &2136800987 stripped
 Transform:

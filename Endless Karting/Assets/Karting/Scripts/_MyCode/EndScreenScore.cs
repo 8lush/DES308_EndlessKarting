@@ -11,7 +11,7 @@ public class EndScreenScore : MonoBehaviour
 
     void Start()
     {
-        score.text = string.Format($"{PlayerPrefs.GetInt("LastScore"):D7}\n Highscore: {PlayerPrefs.GetInt("Highscore"):D7}");
+        score.text = string.Format($"{PlayerPrefs.GetInt("LastScore"):D5}\n Highscore: {PlayerPrefs.GetInt("Highscore"):D5}");
 
    
 
