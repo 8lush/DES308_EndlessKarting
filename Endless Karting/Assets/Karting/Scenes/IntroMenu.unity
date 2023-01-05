@@ -836,8 +836,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Drive as far as you can before the disappearing track catches up to you
-    and get the highest score you can
+  m_text: 'Drive as far as you and get the highest score you can before the disappearing
+    track catches up to you '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 75063828274bdb145a55f6dd2f22e8b2, type: 2}
   m_sharedMaterial: {fileID: 21098970014090698, guid: 75063828274bdb145a55f6dd2f22e8b2,
@@ -1595,6 +1595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToToggle: {fileID: 2061599201}
+  objectToToggle2: {fileID: 1380406715}
   mainScenekart: {fileID: 0}
   resetSelectionAfterClick: 0
 --- !u!114 &1586398493
@@ -1729,7 +1730,7 @@ PrefabInstance:
     - target: {fileID: 4810912518991602691, guid: 19954de30401f73428254541a9ad156e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4810912518991602692, guid: 19954de30401f73428254541a9ad156e,
         type: 3}
@@ -2561,6 +2562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToToggle: {fileID: 2061599201}
+  objectToToggle2: {fileID: 1380406715}
   mainScenekart: {fileID: 0}
   resetSelectionAfterClick: 0
 --- !u!1 &2009518683
@@ -2716,7 +2718,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2061599202
 RectTransform:
   m_ObjectHideFlags: 0

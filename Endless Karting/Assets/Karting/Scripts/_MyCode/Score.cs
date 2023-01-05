@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using KartGame.KartSystems;
+using Abertay.Analytics;
+using GameAnalyticsSDK;
 
 namespace KartGame.UI
 {
@@ -15,6 +17,8 @@ namespace KartGame.UI
 
         private float currentScore;
         private bool scoreCounting = false;
+
+        private float sessionHighscore = 0;
 
         [Header("Difficulty Thresholds")]
         public int[] scoreThresholds;
@@ -45,6 +49,7 @@ namespace KartGame.UI
         {
             currentScore = 0f;
             PlayerPrefs.SetInt("LastScore", 0);
+            sessionHighscore = PlayerPrefs.GetInt("sessionHighscore");
 
             if (AutoFindKart)
             {
@@ -63,6 +68,7 @@ namespace KartGame.UI
         void StartScoreCounter()
         {
             scoreCounting = true;
+            AnalyticsManager.GetGAInstance.SendDesignEvent("Score:Threshold_" + currentThreshold, 1);
         }
 
         void StopScoreCounter()
@@ -74,6 +80,12 @@ namespace KartGame.UI
             {
                 PlayerPrefs.SetInt("Highscore", Mathf.FloorToInt(currentScore));
                 PlayerPrefs.SetInt("NewHighscore", 1);
+            }
+
+            if (currentScore > sessionHighscore)
+            {
+                sessionHighscore = currentScore;
+                PlayerPrefs.SetInt("sessionHighscore", Mathf.FloorToInt(sessionHighscore));
             }
 
             int finalScore = (int)currentScore;
@@ -112,6 +124,8 @@ namespace KartGame.UI
                 {
                     currentThreshold++;
                     EventManager.EventNextThreshold();
+
+                    AnalyticsManager.GetGAInstance.SendDesignEvent("Score:Threshold_" + currentThreshold, 1);
                 }
             }
         }

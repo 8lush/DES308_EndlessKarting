@@ -4,8 +4,19 @@ using UnityEngine.EventSystems;
 public class ToggleGameObjectButton : MonoBehaviour
 {
     public GameObject objectToToggle;
+    public GameObject objectToToggle2;
     public GameObject mainScenekart;
     public bool resetSelectionAfterClick;
+
+
+    private void Start()
+    {
+        if (!PlayerPrefs.HasKey("firstTime")) 
+        {
+            PlayerPrefs.SetInt("firstTime", 0);
+            OpenControls();
+        }
+    }
 
     void Update()
     {
@@ -29,5 +40,11 @@ public class ToggleGameObjectButton : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenControls()
+    {
+        objectToToggle.SetActive(true);
+        objectToToggle2.SetActive(false);
     }
 }

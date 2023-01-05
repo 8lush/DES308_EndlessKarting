@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.VFX;
+using Abertay.Analytics;
+using GameAnalyticsSDK;
 
 
 namespace KartGame.KartSystems
@@ -553,6 +555,8 @@ namespace KartGame.KartSystems
                         // No Input, and car aligned with speed direction => Stop the drift
                         IsDrifting = false;
                         m_CurrentGrip = m_FinalStats.Grip;
+
+                        driftCount++;
                     }
 
                 }
@@ -603,6 +607,10 @@ namespace KartGame.KartSystems
         // Lose condition variable
         float timer;
 
+        // Data collection variables
+        int driftCount;
+        int driftBool;
+
         private void Update()
         {
             // Lose condition if kart hasn't been grounded for too long
@@ -625,6 +633,17 @@ namespace KartGame.KartSystems
         void Lost()
         {
             EventManager.EventEndTrack();
+
+            if(driftCount > 0)
+            {
+                driftBool = 100;
+            }
+
+            AnalyticsManager.GetGAInstance.SendDesignEvent("Drift:DriftCountPerTrack", driftCount);
+            AnalyticsManager.GetGAInstance.SendDesignEvent("Drift:DriftUsagePercentage", driftBool);
+
+            driftCount = 0;
+            driftBool = 0;
         }
 
     }
