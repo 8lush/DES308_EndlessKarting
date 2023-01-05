@@ -111,11 +111,7 @@ namespace KartGame.UI
                 if (currentScore > scoreThresholds[currentThreshold])
                 {
                     currentThreshold++;
-                    Debug.Log(currentThreshold);
                     EventManager.EventNextThreshold();
-
-                    Debug.Log(topSpeed);
-                    Debug.Log(acceleration);
                 }
             }
         }
