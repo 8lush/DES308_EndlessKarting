@@ -19,7 +19,7 @@ namespace KartGame.UI
         private float currentScore;
         private bool scoreCounting = false;
 
-        private float sessionHighscore = 0;
+        private float analyticsScore = 1200;
 
         [Header("Difficulty Thresholds")]
         public int[] scoreThresholds;
@@ -53,7 +53,6 @@ namespace KartGame.UI
         {
             currentScore = 0f;
             PlayerPrefs.SetInt("LastScore", 0);
-            sessionHighscore = PlayerPrefs.GetInt("sessionHighscore");
 
             if (AutoFindKart)
             {
@@ -84,12 +83,6 @@ namespace KartGame.UI
             {
                 PlayerPrefs.SetInt("Highscore", Mathf.FloorToInt(currentScore));
                 PlayerPrefs.SetInt("NewHighscore", 1);
-            }
-
-            if (currentScore > sessionHighscore)
-            {
-                sessionHighscore = currentScore;
-                PlayerPrefs.SetInt("sessionHighscore", Mathf.FloorToInt(sessionHighscore));
             }
 
             int finalScore = (int)currentScore;
@@ -146,6 +139,13 @@ namespace KartGame.UI
 
                     AnalyticsManager.GetGAInstance.SendDesignEvent("Score:Threshold_" + currentThreshold, 1);
                 }
+            }
+
+            if (currentScore > analyticsScore)
+            {
+                AnalyticsManager.GetGAInstance.SendDesignEvent("Score:ProgressScore_" + analyticsScore, 1);
+                Debug.Log("Score:ProgressScore_" + analyticsScore);
+                analyticsScore += 200;
             }
         }
     }
