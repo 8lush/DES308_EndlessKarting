@@ -1369,8 +1369,8 @@ MonoBehaviour:
   score: {fileID: 299868658}
   AutoFindKart: 1
   KartController: {fileID: 0}
-  scoreThresholds: 64000000f4010000e8030000d0070000
-  scoreMultiplier: 050000000a0000001400000028000000
+  scoreThresholds: 640000002c01000058020000e803000000000000
+  scoreMultiplier: 0500000007000000090000000a0000000a000000
 --- !u!114 &299868658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4204,8 +4204,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 100
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
@@ -4215,7 +4220,7 @@ PrefabInstance:
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39.9
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 593336770641352614, guid: 815aae46d0dac409c9d6902909a1db0d,
         type: 3}
@@ -5921,7 +5926,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60
+  field of view: 80
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -5946,8 +5951,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110853102}
-  m_LocalRotation: {x: 0.09761156, y: 0, z: 0, w: 0.9952246}
-  m_LocalPosition: {x: 0, y: 3.6, z: -6}
+  m_LocalRotation: {x: 0.07982558, y: 0, z: 0, w: 0.9968089}
+  m_LocalPosition: {x: 0, y: 3.94, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6058,6 +6063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2121216334}
   - component: {fileID: 2121216333}
+  - component: {fileID: 2121216335}
   m_Layer: 0
   m_Name: GameMode
   m_TagString: Untagged
@@ -6099,8 +6105,8 @@ MonoBehaviour:
   trackSpawnDelay: 0.5
   trackDestroyDelay: 5
   trackInstantiationFrequency: 2
-  minNumberofTrackForward: 2
-  maxNumberofTrackForward: 3
+  minNumberofTrackForward: 3
+  maxNumberofTrackForward: 5
   listTurnTracks:
   - trackIndex: 0
   - trackIndex: 1
@@ -6121,6 +6127,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2121216335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121216332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347a9b08659077b4183216b9b735d9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackPieces: []
+  speed: 3
+  trackLifespan: 6
+  trackRed: 2
+  trackYellow: 3
+  trackDown: 1
+  maxQueueCount: 13
 --- !u!4 &2136800987 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1579282987822796750, guid: 941fac9249b6442cdb2d3f23472128e2,
@@ -7110,7 +7135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats:
-    TopSpeed: 24
+    TopSpeed: 20
     Acceleration: 8
     ReverseSpeed: 10
     ReverseAcceleration: 3
@@ -7156,17 +7181,6 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 4294967291
-  currentThreshold: 0
-  TopSpeedArray:
-  - 20
-  - 24
-  - 28
-  - 32
-  AccelarationArray:
-  - 8
-  - 10
-  - 12
-  - 14
 --- !u!114 &4810912517534767555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7474,7 +7488,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4810912519539360346}
-  m_Material: {fileID: 13400000, guid: a46ba4e273ba0684f90f4acc0fdf44d5, type: 2}
+  m_Material: {fileID: 13400000, guid: d95b5e49839d84ee191c3c6961b60124, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.45
@@ -7488,7 +7502,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4810912519539360346}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.582, z: -0.10700226}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7788,6 +7802,16 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6691645747818288874, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
+        type: 3}
+      propertyPath: m_FollowOffset.y
+      value: 3.3400002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691645747818288877, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
+        type: 3}
+      propertyPath: m_LookaheadTime
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6691645748356329552, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
         type: 3}
       propertyPath: m_Follow
@@ -7798,6 +7822,11 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 4810912519539360341}
+    - target: {fileID: 6691645748356329552, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 6691645748356329552, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
@@ -7816,7 +7845,7 @@ PrefabInstance:
     - target: {fileID: 6691645748356329553, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6
+      value: 3.94
       objectReference: {fileID: 0}
     - target: {fileID: 6691645748356329553, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
         type: 3}
@@ -7826,12 +7855,12 @@ PrefabInstance:
     - target: {fileID: 6691645748356329553, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9952246
+      value: 0.9968089
       objectReference: {fileID: 0}
     - target: {fileID: 6691645748356329553, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.09761156
+      value: 0.07982558
       objectReference: {fileID: 0}
     - target: {fileID: 6691645748356329553, guid: 4366ba6a4d5213d4f9fc7bba3e778799,
         type: 3}

@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.VFX;
+using Abertay.Analytics;
+using GameAnalyticsSDK;
 
 
 namespace KartGame.KartSystems
@@ -16,9 +18,6 @@ namespace KartGame.KartSystems
             public float ElapsedTime;
             public float MaxTime;
         }
-
-        // My variables
-        float timer;
 
         [System.Serializable]
         public struct Stats
@@ -556,6 +555,8 @@ namespace KartGame.KartSystems
                         // No Input, and car aligned with speed direction => Stop the drift
                         IsDrifting = false;
                         m_CurrentGrip = m_FinalStats.Grip;
+
+                        driftCount++;
                     }
 
                 }
@@ -602,21 +603,13 @@ namespace KartGame.KartSystems
             ActivateDriftVFX(IsDrifting && GroundPercent > 0.0f);
         }
 
-        void OnEnable()
-        {
-            EventManager.NextThreshold += SpeedUp;
-        }
 
-        void OnDisable()
-        {
-            EventManager.NextThreshold -= SpeedUp;
-        }
+        // Lose condition variable
+        float timer;
 
-        private void Start()
-        {
-            baseStats.TopSpeed = TopSpeedArray[currentThreshold];
-            baseStats.Acceleration = AccelarationArray[currentThreshold];
-        }
+        // Data collection variables
+        int driftCount;
+        int driftBool;
 
         private void Update()
         {
@@ -630,7 +623,7 @@ namespace KartGame.KartSystems
 
             timer += Time.deltaTime;
 
-            if (timer > 1f)
+            if (timer > 1.5f)
             {
                 timer = 0.0f;
                 Lost();
@@ -640,19 +633,17 @@ namespace KartGame.KartSystems
         void Lost()
         {
             EventManager.EventEndTrack();
-        }
 
-        [Header("Score Thresholds")]
-        public int currentThreshold = 0;
-        public float[] TopSpeedArray;
-        public float[] AccelarationArray;
+            if(driftCount > 0)
+            {
+                driftBool = 100;
+            }
 
-        void SpeedUp()
-        {
-            currentThreshold++;
+            AnalyticsManager.GetGAInstance.SendDesignEvent("Drift:DriftCountPerTrack", driftCount);
+            AnalyticsManager.GetGAInstance.SendDesignEvent("Drift:DriftUsagePercentage", driftBool);
 
-            baseStats.TopSpeed = TopSpeedArray[currentThreshold];
-            baseStats.Acceleration = AccelarationArray[currentThreshold];
+            driftCount = 0;
+            driftBool = 0;
         }
 
     }

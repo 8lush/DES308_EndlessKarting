@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using Abertay.Analytics;
 using GameAnalyticsSDK;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace KartGame.UI
 {
@@ -22,6 +23,12 @@ namespace KartGame.UI
 
         public void GameAnalyticsEndSession()
         {
+            int sessionHighscore;
+
+            sessionHighscore = PlayerPrefs.GetInt("sessionHighscore");
+            AnalyticsManager.GetGAInstance.SendDesignEvent("Session Highscore", sessionHighscore);
+            PlayerPrefs.SetInt("sessionHighscore", 0); 
+
             GameAnalyticsSDK.GameAnalytics.EndSession();
         }
     }
