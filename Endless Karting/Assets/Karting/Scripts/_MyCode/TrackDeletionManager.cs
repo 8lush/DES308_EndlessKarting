@@ -13,9 +13,6 @@ public class TrackDeletionManager : MonoBehaviour
     [Header("Track Destroy Variables")]
     [SerializeField] private float speed = 1f;
     [SerializeField] private float trackLifespan = 4f;
-    //[SerializeField] private float trackNext = 3f;
-    //[SerializeField] private float trackYellow = 2f;
-    //[SerializeField] private float trackRed = 2f;
     [SerializeField] private float trackDown = 1f;
 
     private bool initialSpawn = true;
@@ -35,9 +32,6 @@ public class TrackDeletionManager : MonoBehaviour
 
     private void Start()
     {
-        //trackNext = trackLifespan / 100 * trackNext;
-        //trackYellow = trackLifespan / 100 * trackYellow;
-        //trackRed = trackLifespan / 100 * trackRed;
         trackDown = trackLifespan / 100 * trackDown;
     }
 

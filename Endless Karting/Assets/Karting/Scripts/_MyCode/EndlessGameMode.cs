@@ -25,9 +25,12 @@ public class EndlessGameMode : MonoBehaviour
     private Vector3 trackPositionOffset = new Vector3(0, 0, 0);
     private Vector3 trackRotationOffset = new Vector3(0, 0, 0);
 
-    [Header("Track Spawning Timings")]
-    [SerializeField] private float extraLifespan;
+    [Header("Track Delete Extra Time")]
     [SerializeField] private float extraLifeSpanUTurn = 100;
+    [SerializeField] private float extraLifeSpanUpDownTrack = 100;
+    [SerializeField] private float extraLifeSpanSCurveTrack = 100;
+    private float extraLifespan;
+
 
     [Header("Track min/max")]
     public int minNumberofTrackForward = 2;
@@ -278,17 +281,20 @@ public class EndlessGameMode : MonoBehaviour
                 trackPositionOffset = trackPositionOffset + new Vector3(0, 4, 0);
                 AddTrackForwardOffset();
                 AddTrackForwardOffset();
+                extraLifespan = extraLifeSpanUpDownTrack;
                 break;
             case 4:
                 AddTrackForwardOffset();
                 AddTrackForwardOffset();
                 trackPositionOffset = trackPositionOffset + new Vector3(0, -4, 0);
                 trackSpecial = Instantiate(updownTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                extraLifespan = extraLifeSpanUpDownTrack;
                 break;
             case 5:
                 trackSpecial = Instantiate(scurveRightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
                 AddTrackForwardOffset();
                 AddTrackTurnOffset();
+                extraLifespan = extraLifeSpanSCurveTrack;
                 break;
             case 6:
                 trackSpecial = Instantiate(scurveLeftTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
@@ -296,6 +302,7 @@ public class EndlessGameMode : MonoBehaviour
                 NormalizeTrackDirection(-1);
                 AddTrackTurnOffset();
                 NormalizeTrackDirection(1);
+                extraLifespan = extraLifeSpanSCurveTrack;
                 break;
             default:
                 TrackTurn();

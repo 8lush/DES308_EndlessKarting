@@ -6141,7 +6141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackPieces: []
   speed: 5
-  trackLifespan: 0.55
+  trackLifespan: 0.6
   trackDown: 20
   yellowTracks: 3
   redTracks: 2
