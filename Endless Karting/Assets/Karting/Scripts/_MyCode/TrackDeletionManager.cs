@@ -13,34 +13,54 @@ public class TrackDeletionManager : MonoBehaviour
     [Header("Track Destroy Variables")]
     [SerializeField] private float speed = 1f;
     [SerializeField] private float trackLifespan = 4f;
-    [SerializeField] private float trackRed = 2f;
-    [SerializeField] private float trackYellow = 2f;
+    //[SerializeField] private float trackNext = 3f;
+    //[SerializeField] private float trackYellow = 2f;
+    //[SerializeField] private float trackRed = 2f;
     [SerializeField] private float trackDown = 1f;
+
+    private bool initialSpawn = true;
+
+    [SerializeField] private int yellowTracks = 3;
+    [SerializeField] private int redTracks = 2;
+    private int colourTracks;
 
     // Working variables
     private int trackIndex = 0;
-    private float deleteTime;
+    private float deleteTimer;
 
     public float maxQueueCount = 15;
     private bool maxQueueExceeded = false;
 
     GameObject trackPiece;
 
-
-    void Update()
+    private void Start()
     {
+        //trackNext = trackLifespan / 100 * trackNext;
+        //trackYellow = trackLifespan / 100 * trackYellow;
+        //trackRed = trackLifespan / 100 * trackRed;
+        trackDown = trackLifespan / 100 * trackDown;
+    }
 
+    void FixedUpdate()
+    {
         if (trackPieces.Count != 0)
         {
-            bool first = false;
+            bool first = true;
 
-            for (int i = 0; i < trackPieces.Count; i++)
+            colourTracks = yellowTracks + redTracks;
+
+            if(trackPieces.Count < colourTracks)
+            {
+                colourTracks = trackPieces.Count - 1;
+            }
+
+            for (int i = 0; i < colourTracks; i++)
             {
                 switch (first)
                 {
                     case true:
                         trackIndex = trackPieces.IndexOf(trackPieces.First());
-                        first = false;
+                        //deleteTimer = deleteTimers[trackIndex];
                         break;
                     case false:
                         trackIndex = trackPieces.IndexOf(trackPieces.GetNextInCycle(trackPieces[trackIndex]));
@@ -48,52 +68,68 @@ public class TrackDeletionManager : MonoBehaviour
                 }
 
                 trackPiece = trackPieces[trackIndex];
-                deleteTime = deleteTimers[trackIndex];
 
                 maxQueueExceeded = maxQueueCount <= trackPieces.Count;
 
-                switch (maxQueueExceeded)
+                switch (maxQueueExceeded, first)
                 {
-                    case true:
-                        deleteTimers[trackIndex] -= Time.deltaTime * 3f;
+                    case (true, true):
+                        deleteTimers[trackIndex] -= Time.deltaTime * 5f;
                         break;
-                    case false:
+                    case (false, true):
                         deleteTimers[trackIndex] -= Time.deltaTime;
+                        break;
+                    default:
                         break;
                 }
 
 
-                if (deleteTime <= 0f)
+                if (deleteTimers[trackIndex] <= 0f && first)
                 {
                     Destroy(trackPiece);
                     trackPieces.RemoveAt(trackIndex);
 
                     deleteTimers.RemoveAt(trackIndex);
-                }
-                else if (deleteTime <= trackDown)
+                }   
+                else if (deleteTimers[trackIndex] <= trackDown && first)
                 {
                     // Move object downwards
                     trackPiece.transform.position += Vector3.down * speed * Time.deltaTime;
                 }
-                else if (deleteTime <= trackRed)
+                else if (i < redTracks)
                 {
                     trackPiece.GetComponent<Renderer>().material.color = Color.red;
                 }
-                else if (deleteTime <= trackYellow)
+                else if (trackPieces.Count < colourTracks)
+                {
+                    break;
+                }
+                else if (i <= (redTracks + yellowTracks))
                 {
                     trackPiece.GetComponent<Renderer>().material.color = Color.yellow;
                 }
+
+                first = false;
             }
         }
         
     }
 
-    public void AddToList(GameObject trackReference)
+    public void AddToList(GameObject trackReference, float extraLifespan)
     {
         trackPieces.Add(trackReference);
 
+        extraLifespan = trackLifespan / 100 * extraLifespan;
+
+        if (initialSpawn)
+        {
+            initialSpawn = false;
+
+            extraLifespan = 3.5f;
+        }
+
         int index = trackPieces.IndexOf(trackReference);
-        deleteTimers.Insert(index, trackLifespan);
+        deleteTimers.Insert(index, trackLifespan + extraLifespan);
     }
 
 }

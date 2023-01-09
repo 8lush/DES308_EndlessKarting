@@ -1371,6 +1371,7 @@ MonoBehaviour:
   KartController: {fileID: 0}
   scoreThresholds: 640000002c01000058020000e803000000000000
   scoreMultiplier: 0500000007000000090000000a0000000a000000
+  maxTopSpeedScore: 10000
 --- !u!114 &299868658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6102,9 +6103,8 @@ MonoBehaviour:
   scurveLeftTrack: {fileID: 593336770641709958, guid: 4ceb0af72927442b89171edb85a2ccfa,
     type: 3}
   startingIsland: {fileID: 977480980}
-  trackSpawnDelay: 0.5
-  trackDestroyDelay: 5
-  trackInstantiationFrequency: 2
+  extraLifespan: 0
+  extraLifeSpanUTurn: 100
   minNumberofTrackForward: 3
   maxNumberofTrackForward: 5
   listTurnTracks:
@@ -6140,12 +6140,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackPieces: []
-  speed: 3
-  trackLifespan: 6
-  trackRed: 2
-  trackYellow: 3
-  trackDown: 1
-  maxQueueCount: 13
+  speed: 5
+  trackLifespan: 0.55
+  trackDown: 20
+  yellowTracks: 3
+  redTracks: 2
+  maxQueueCount: 14
 --- !u!4 &2136800987 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1579282987822796750, guid: 941fac9249b6442cdb2d3f23472128e2,

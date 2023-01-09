@@ -5,6 +5,7 @@ using TMPro;
 using KartGame.KartSystems;
 using Abertay.Analytics;
 using GameAnalyticsSDK;
+using System;
 
 namespace KartGame.UI
 {
@@ -32,6 +33,9 @@ namespace KartGame.UI
         private float acceleration;
         private float reverseTopSpeed;
         private float reverseAcceleration;
+
+        [SerializeField] private float maxTopSpeedScore;
+        private float speedIncreaseCof;
 
         void OnEnable()
         {
@@ -100,16 +104,31 @@ namespace KartGame.UI
             if (scoreCounting)
                 currentScore += Time.deltaTime * (speed / topSpeed) * scoreMultiplier[currentThreshold];
 
-            // Gradual speed increase
-            topSpeed = baseTopSpeed + ((baseTopSpeed / 100) * (currentScore / 20));
-            acceleration = baseAcceleration + ((baseAcceleration / 100) * (currentScore / 20));
-            reverseTopSpeed = topSpeed / 2f;
-            reverseAcceleration = acceleration;
+            if (currentScore < maxTopSpeedScore)
+            {
+                // Two constants for the speed increase calculation
+                float constantFunction = 5f;
+                float constantMultiplier = 40f;
 
-            KartController.baseStats.TopSpeed = topSpeed;
-            KartController.baseStats.Acceleration = acceleration;
-            KartController.baseStats.ReverseSpeed = reverseTopSpeed;
-            KartController.baseStats.ReverseAcceleration = reverseAcceleration;
+                // Get percent of the way to maxTopSpeedScore
+                speedIncreaseCof = (currentScore / maxTopSpeedScore);
+
+                // Uses f(x) = x^1/2 + xc to get a gradual increase based off of score
+                speedIncreaseCof = Mathf.Pow(speedIncreaseCof, 1f / 2f) + speedIncreaseCof * constantFunction;
+                
+                // Multiplies the f(x) by a multiplier to bring up the value
+                speedIncreaseCof = speedIncreaseCof * constantMultiplier;
+
+                topSpeed = baseTopSpeed + ((baseTopSpeed / 100) * speedIncreaseCof);
+                acceleration = baseAcceleration + ((baseAcceleration / 100) * speedIncreaseCof);
+                reverseTopSpeed = topSpeed / 2f;
+                reverseAcceleration = acceleration;
+
+                KartController.baseStats.TopSpeed = topSpeed;
+                KartController.baseStats.Acceleration = acceleration;
+                KartController.baseStats.ReverseSpeed = reverseTopSpeed;
+                KartController.baseStats.ReverseAcceleration = reverseAcceleration;
+            }
 
             // Displays score
             score.text = string.Format($"{Mathf.FloorToInt(currentScore):D5}");
