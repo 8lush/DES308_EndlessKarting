@@ -25,10 +25,12 @@ public class EndlessGameMode : MonoBehaviour
     private Vector3 trackPositionOffset = new Vector3(0, 0, 0);
     private Vector3 trackRotationOffset = new Vector3(0, 0, 0);
 
-    [Header("Track Spawning Timings")]
-    public float trackSpawnDelay = 0.5f;
-    public float trackDestroyDelay = 5f;
-    public float trackInstantiationFrequency = 2f;
+    [Header("Track Delete Extra Time")]
+    [SerializeField] private float extraLifeSpanUTurn = 100;
+    [SerializeField] private float extraLifeSpanUpDownTrack = 100;
+    [SerializeField] private float extraLifeSpanSCurveTrack = 100;
+    private float extraLifespan;
+
 
     [Header("Track min/max")]
     public int minNumberofTrackForward = 2;
@@ -92,8 +94,8 @@ public class EndlessGameMode : MonoBehaviour
                 listSpecialTracks.Add(new trackInfo { trackIndex = 3 });
                 listSpecialTracks.Add(new trackInfo { trackIndex = 4 });
 
-                NextTrack();
-                m_DeletionManager.maxQueueCount++;
+                //NextTrack();
+                //m_DeletionManager.maxQueueCount++;
                 minNumberofTrackForward++;
                 maxNumberofTrackForward++;
                 break;
@@ -110,8 +112,8 @@ public class EndlessGameMode : MonoBehaviour
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 5 });
                 listSpecialTracks.Remove(new trackInfo { trackIndex = 6 });
 
-                NextTrack();
-                m_DeletionManager.maxQueueCount++;
+                //NextTrack();
+                //m_DeletionManager.maxQueueCount++;
                 minNumberofTrackForward++;
                 maxNumberofTrackForward++;
                 break;
@@ -125,6 +127,7 @@ public class EndlessGameMode : MonoBehaviour
         TrackForward();
         TrackForward();
         TrackForward();
+        NextTrack();
     }
 
     void NextTrack()
@@ -153,6 +156,8 @@ public class EndlessGameMode : MonoBehaviour
     {
         GameObject trackForward;
 
+        extraLifespan = 0;
+
         if (trapCooldownCurrent > 0)
         {
             trackForward = Instantiate(straightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
@@ -179,7 +184,7 @@ public class EndlessGameMode : MonoBehaviour
         }
 
         //Destroy(trackForward, trackDestroyDelay);
-        m_DeletionManager.AddToList(trackForward);     
+        m_DeletionManager.AddToList(trackForward, extraLifespan);     
 
         AddTrackForwardOffset();
     }
@@ -188,6 +193,8 @@ public class EndlessGameMode : MonoBehaviour
     private void TrackTurn()
     {
         GameObject trackTurn;
+
+        extraLifespan = 0;
 
         int i = listTurnTracks[UnityEngine.Random.Range(0, listTurnTracks.Count)].trackIndex;
 
@@ -228,7 +235,7 @@ public class EndlessGameMode : MonoBehaviour
         }
 
         //Destroy(trackTurn, trackDestroyDelay);
-        m_DeletionManager.AddToList(trackTurn);
+        m_DeletionManager.AddToList(trackTurn, extraLifespan);
 
     }
 
@@ -236,6 +243,10 @@ public class EndlessGameMode : MonoBehaviour
     private void TrackSpecial()
     {
         GameObject trackSpecial;
+
+        extraLifespan = 0;
+
+        trapCooldownCurrent = trapCooldownBase;
 
         int i = listSpecialTracks[UnityEngine.Random.Range(0, listSpecialTracks.Count)].trackIndex;
 
@@ -252,6 +263,8 @@ public class EndlessGameMode : MonoBehaviour
                 NormalizeTrackDirection(1);
                 AddTrackTurnOffset();
                 NormalizeTrackDirection(1);
+                trapCooldownCurrent++;
+                extraLifespan = extraLifeSpanUTurn;
                 break;
             case 2:
                 NormalizeTrackDirection(-1);
@@ -260,23 +273,28 @@ public class EndlessGameMode : MonoBehaviour
                 AddTrackTurnOffset();
                 trackSpecial = Instantiate(uTurnTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
                 trackRotationOffset = trackRotationOffset + new Vector3(0, 180, 0);
+                trapCooldownCurrent++;
+                extraLifespan = extraLifeSpanUTurn;
                 break;
             case 3:
                 trackSpecial = Instantiate(updownTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset + new Vector3(0, 180, 0)));
                 trackPositionOffset = trackPositionOffset + new Vector3(0, 4, 0);
                 AddTrackForwardOffset();
                 AddTrackForwardOffset();
+                extraLifespan = extraLifeSpanUpDownTrack;
                 break;
             case 4:
                 AddTrackForwardOffset();
                 AddTrackForwardOffset();
                 trackPositionOffset = trackPositionOffset + new Vector3(0, -4, 0);
                 trackSpecial = Instantiate(updownTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
+                extraLifespan = extraLifeSpanUpDownTrack;
                 break;
             case 5:
                 trackSpecial = Instantiate(scurveRightTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
                 AddTrackForwardOffset();
                 AddTrackTurnOffset();
+                extraLifespan = extraLifeSpanSCurveTrack;
                 break;
             case 6:
                 trackSpecial = Instantiate(scurveLeftTrack, trackSpawnLocation + trackPositionOffset, Quaternion.Euler(trackRotationOffset));
@@ -284,6 +302,7 @@ public class EndlessGameMode : MonoBehaviour
                 NormalizeTrackDirection(-1);
                 AddTrackTurnOffset();
                 NormalizeTrackDirection(1);
+                extraLifespan = extraLifeSpanSCurveTrack;
                 break;
             default:
                 TrackTurn();
@@ -294,10 +313,9 @@ public class EndlessGameMode : MonoBehaviour
         //Destroy(trackSpecial, trackDestroyDelay);
         if(trackSpecial != null)
         {
-            m_DeletionManager.AddToList(trackSpecial);
+            m_DeletionManager.AddToList(trackSpecial, extraLifespan);
         }
 
-        trapCooldownCurrent = trapCooldownBase;
     }
 
     // Keeps track of position offsets

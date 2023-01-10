@@ -555,8 +555,6 @@ namespace KartGame.KartSystems
                         // No Input, and car aligned with speed direction => Stop the drift
                         IsDrifting = false;
                         m_CurrentGrip = m_FinalStats.Grip;
-
-                        driftCount++;
                     }
 
                 }
@@ -610,9 +608,21 @@ namespace KartGame.KartSystems
         // Data collection variables
         int driftCount;
         int driftBool;
+        bool driftAdded = false;
 
         private void Update()
         {
+            if (Input.Brake && IsDrifting && !driftAdded)
+            {
+                driftAdded = true;
+                driftCount++;
+            }
+
+            if (!Input.Brake && !IsDrifting)
+            {
+                driftAdded = false;
+            }
+
             // Lose condition if kart hasn't been grounded for too long
             if (AirPercent < 0.9)
             {
@@ -628,6 +638,7 @@ namespace KartGame.KartSystems
                 timer = 0.0f;
                 Lost();
             }
+
         }
 
         void Lost()
